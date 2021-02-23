@@ -1,0 +1,29 @@
+{
+  "name": "employee-tracker",
+  "version": "1.0.0",
+  "description": "Employee tracker using inquirer and mySQL",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/esroleo/employee-tracker.git"
+  },
+  "keywords": [
+    "employee",
+    "tracker",
+    "inquirer"
+  ],
+  "author": "Esteban Romero",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/esroleo/employee-tracker/issues"
+  },
+  "homepage": "https://github.com/esroleo/employee-tracker#readme",
+  "dependencies": {
+    "inquirer": "^7.3.3",
+    "mysql2": "^2.2.5"
+  }
+}
