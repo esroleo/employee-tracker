@@ -21,7 +21,14 @@ connection.connect(function(err) {
 
     // View All Employees
 connection.query(
-  'select e.first_name, e.last_name, r.title, dep.name AS department, r.salary from employee AS e INNER JOIN role AS r ON e.role_id = r.id INNER JOIN department AS dep ON r.department_id = dep.id;',
+  `select e.first_name, e.last_name, r.title, dep.name AS department, 
+  r.salary,
+  IFNULL(CONCAT(m.first_name, ' ' , m.last_name), 'No Manager') AS 'manager'
+  from employee AS e
+  INNER JOIN role AS r ON e.role_id = r.id 
+  INNER JOIN department AS dep ON r.department_id = dep.id
+  LEFT JOIN employee AS m ON m.id = e.manager_id
+  ORDER BY e.first_name;`,
   function(err, results, fields) {
     const table = cTable.getTable(results);
     console.table(table);
@@ -31,26 +38,39 @@ connection.query(
   }
 );
 
-
-  // simple query
-  connection.query(
-    'SELECT * FROM role',
-    function(err, results, fields) {
-      const table = cTable.getTable(results);
-      console.table(table);
-      //console.log(results); // results contains rows returned by server
-      //console.log(fields); // fields contains extra meta data about results, if available
-    }
-  );
-
-    // simple query
+    // View employee with manager
     connection.query(
-      'SELECT * FROM employee',
+      `select IFNULL(CONCAT(m.first_name, ', ' , m.last_name), 'No Manager') AS 'Manager', e.first_name AS 'Direct report'
+      from employee AS e LEFT JOIN employee m ON m.id = e.manager_id 
+      ORDER BY Manager;`,
       function(err, results, fields) {
         const table = cTable.getTable(results);
         console.table(table);
+        //console.log(results);
         //console.log(results); // results contains rows returned by server
         //console.log(fields); // fields contains extra meta data about results, if available
       }
     );
+
+  // // simple query
+  // connection.query(
+  //   'SELECT * FROM role',
+  //   function(err, results, fields) {
+  //     const table = cTable.getTable(results);
+  //     console.table(table);
+  //     //console.log(results); // results contains rows returned by server
+  //     //console.log(fields); // fields contains extra meta data about results, if available
+  //   }
+  // );
+
+    // // simple query
+    // connection.query(
+    //   'SELECT * FROM employee',
+    //   function(err, results, fields) {
+    //     const table = cTable.getTable(results);
+    //     console.table(table);
+    //     //console.log(results); // results contains rows returned by server
+    //     //console.log(fields); // fields contains extra meta data about results, if available
+    //   }
+    // );
 
