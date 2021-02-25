@@ -75,6 +75,10 @@ class RunApplication {
                 this.addRole()
                 //resultSet.getAddRole()
                 break;
+              case "Add An Employee":
+                this.addEmployee()
+                //resultSet.getAddRole()
+                break;
               case "View All Employees By Department":
                 resultSet.getViewAllEmployeesByDeparment()
                 break;
@@ -203,6 +207,74 @@ class RunApplication {
       });
 
     }
+
+    addEmployee() {
+
+      inquirer
+      .prompt([
+        {
+          type: 'input',
+          name: 'firstName',
+          message: "What is the employee's first name?",
+          validate: firstName => {
+              if (firstName) {
+                return true;
+              } else {
+                console.log("Please enter employee first name");
+                return false;
+              }
+            }
+      },
+      {
+        type: 'input',
+        name: 'lastName',
+        message: "What is the employee's last name?",
+        validate: lastName => {
+            if (lastName) {
+              return true;
+            } else {
+              console.log("Please enter employee's last name");
+              return false;
+            }
+          }
+      },
+     {
+      type: 'input',
+      name: 'employeeRole',
+      message: "What is the employee's role?",
+      validate: employeeRole => {
+          if (employeeRole) {
+            return true;
+          } else {
+            console.log("Please enter employee's role");
+            return false;
+          }
+        }
+    },
+    {
+      type: 'list',
+      name: 'employeeManager',
+      message: "Who is the employee's manager?",
+      choices: ['Ashley Rodriguez','John Doe', 'Sara Lourd', 'No Manager'],
+      validate: employeeManager => {
+          if (employeeManager) {
+            return true;
+          } else {
+            console.log("Please enter employee's role");
+            return false;
+          }
+        }
+    },
+      ])
+      // if answer is true go to next step
+      .then(answers => {
+        const resultSet = new Insert(answers)
+        resultSet.getInsertEmployee();
+      });
+
+    }
+
+
 
 
 }
