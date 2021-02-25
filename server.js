@@ -7,6 +7,9 @@ const inquirer = require('inquirer');
 
 // npm library console.table to display tabulated format at console log
 const cTable = require('console.table');
+
+// Import employee class
+const Sql = require('./lib/Sql');
  
 // create the connection to database
 const connection = mysql.createConnection({
@@ -23,6 +26,7 @@ connection.connect(function(err) {
     new RunApplication().getInquirerOptions();
   });
 
+
 class RunApplication {
   constructor () {
       // *** Hold object arrays *** //
@@ -30,7 +34,7 @@ class RunApplication {
       this.engineer = [];
       this.intern = []
       // *** Used for conditional chesk **//
-      this.employeeType = "";
+      //this.resultSet = "";
     }
 
     getInquirerOptions() {
@@ -41,34 +45,39 @@ class RunApplication {
               type: 'list',
               name: 'queryType',
               message: "What would you like to do?",
-              choices: ['View all employees', 'Intern']
+              choices: ['View all employees', 'View All Employees By Department', 'View All Employees by Manager']
             }
           ])
           // if answer is true go to next step
           .then(answers => {
             //console.log(answers);
-            const {queryType} = answers;
             
-            if (queryType === "View all employees") {
-              connection.query(
-                `select e.first_name, e.last_name, r.title, dep.name AS department, 
-                r.salary,
-                IFNULL(CONCAT(m.first_name, ' ' , m.last_name), 'No Manager') AS 'manager'
-                from employee AS e
-                INNER JOIN role AS r ON e.role_id = r.id 
-                INNER JOIN department AS dep ON r.department_id = dep.id
-                LEFT JOIN employee AS m ON m.id = e.manager_id
-                ORDER BY e.first_name;`,
-                function(err, results, fields) {
-                  const table = cTable.getTable(results);
-                  console.table(table);
-                  //console.log(results);
-                  //console.log(results);
-                  //console.log(results); // results contains rows returned by server
-                  //console.log(fields); // fields contains extra meta data about results, if available
-                }
-              );
-            }
+            const resultSet = new Sql(answers)
+            //this.resultSet = new Sql(answers)
+            resultSet.getAllEmployeesViewTypes();
+            //console.log(this.resultSet)
+            
+            
+            // if (queryType === "View all employees") {
+            //   connection.query(
+            //     `select e.first_name, e.last_name, r.title, dep.name AS department, 
+            //     r.salary,
+            //     IFNULL(CONCAT(m.first_name, ' ' , m.last_name), 'No Manager') AS 'manager'
+            //     from employee AS e
+            //     INNER JOIN role AS r ON e.role_id = r.id 
+            //     INNER JOIN department AS dep ON r.department_id = dep.id
+            //     LEFT JOIN employee AS m ON m.id = e.manager_id
+            //     ORDER BY e.first_name;`,
+            //     function(err, results, fields) {
+            //       const table = cTable.getTable(results);
+            //       console.table(table);
+            //       //console.log(results);
+            //       //console.log(results);
+            //       //console.log(results); // results contains rows returned by server
+            //       //console.log(fields); // fields contains extra meta data about results, if available
+            //     }
+            //   );
+            // }
             //this.employeeType = employeeType;
             //this.getFurtherInformation();
           });
@@ -81,6 +90,8 @@ class RunApplication {
 
 
 }
+
+//new RunApplication().getInquirerOptions();
 
 
 
