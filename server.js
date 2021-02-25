@@ -10,6 +10,9 @@ const cTable = require('console.table');
 
 // Import employee class
 const Sql = require('./lib/Sql');
+
+// Import employee class
+const Insert = require('./lib/Insert');
  
 // create the connection to database
 const connection = mysql.createConnection({
@@ -45,7 +48,7 @@ class RunApplication {
               type: 'list',
               name: 'queryType',
               message: "What would you like to do?",
-              choices: ['View all employees', 'View All Employees By Department', 'View All Employees by Manager']
+              choices: ['View All Departments','View All Roles', 'View All employees', 'Add a Role', 'Add An Employee', 'Update Employee Role', 'View All Employees By Department', 'View All Employees by Manager', 'Add Employee']
             }
           ])
           // if answer is true go to next step
@@ -53,8 +56,35 @@ class RunApplication {
             //console.log(answers);
             
             const resultSet = new Sql(answers)
+           // console.log(resultSet.queryType);
+            switch(resultSet.queryType) {
+              case "View All Departments":
+                resultSet.getViewAllDepartments()
+                break;
+              case "View All Roles":
+                resultSet.getViewAllRoles()
+                break;
+              case "View All employees":
+                resultSet.getViewAllEmployees()
+                break;
+              case "Add a Role":
+                this.addRole()
+                //resultSet.getAddRole()
+                break;
+              case "View All Employees By Department":
+                resultSet.getViewAllEmployeesByDeparment()
+                break;
+              case "View All Employees by Manager":
+                resultSet.getViewAllEmployeesByManager()
+                break;
+              case "Add Employee":
+                resultSet.getViewAllEmployeesByManager()
+                break;
+              default:
+                text = "I have never heard of that fruit...";
+            }
             //this.resultSet = new Sql(answers)
-            resultSet.getAllEmployeesViewTypes();
+            //resultSet.getAllEmployeesViewTypes();
             //console.log(this.resultSet)
             
             
@@ -85,6 +115,58 @@ class RunApplication {
           
     
 
+
+    }
+
+    addRole() {
+
+      inquirer
+      .prompt([
+        {
+          type: 'input',
+          name: 'roleTitle',
+          message: "What is the role title?",
+          validate: employeeName => {
+              if (employeeName) {
+                return true;
+              } else {
+                console.log("Please enter the role's title");
+                return false;
+              }
+            }
+      },
+      {
+        type: 'input',
+        name: 'salary',
+        message: "What is the role's salary?",
+        validate: employeeName => {
+            if (employeeName) {
+              return true;
+            } else {
+              console.log("Please enter role's salary");
+              return false;
+            }
+          }
+      },
+     {
+      type: 'input',
+      name: 'departmentId',
+      message: "Plese enter department id",
+      validate: employeeName => {
+          if (employeeName) {
+            return true;
+          } else {
+            console.log("Please enter department id");
+            return false;
+          }
+        }
+    },
+      ])
+      // if answer is true go to next step
+      .then(answers => {
+        const resultSet = new Insert(answers)
+        resultSet.getInsert();
+      });
 
     }
 
