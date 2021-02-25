@@ -48,7 +48,7 @@ class RunApplication {
               type: 'list',
               name: 'queryType',
               message: "What would you like to do?",
-              choices: ['View All Departments','View All Roles', 'View All employees', 'Add a Role', 'Add An Employee', 'Update Employee Role', 'View All Employees By Department', 'View All Employees by Manager', 'Add Employee']
+              choices: ['View All Departments','View All Roles', 'View All employees', 'Add a Department', 'Add a Role', 'Add An Employee', 'Update Employee Role', 'View All Employees By Department', 'View All Employees by Manager', 'Add Employee']
             }
           ])
           // if answer is true go to next step
@@ -66,6 +66,10 @@ class RunApplication {
                 break;
               case "View All employees":
                 resultSet.getViewAllEmployees()
+                break;
+              case "Add a Department":
+                this.addDepartment()
+                //resultSet.getAddRole()
                 break;
               case "Add a Role":
                 this.addRole()
@@ -118,6 +122,36 @@ class RunApplication {
 
     }
 
+
+    addDepartment() {
+
+      inquirer
+      .prompt([
+        {
+          type: 'input',
+          name: 'departmentName',
+          message: "What is the department name?",
+          validate: departmentName => {
+              if (departmentName) {
+                return true;
+              } else {
+                console.log("Please enter the department's name");
+                return false;
+              }
+            }
+      },
+      ])
+      // if answer is true go to next step
+      .then(answers => {
+        const resultSet = new Insert(answers)
+        resultSet.getInsertDepartment();
+      });
+
+    }
+
+
+    
+
     addRole() {
 
       inquirer
@@ -165,7 +199,7 @@ class RunApplication {
       // if answer is true go to next step
       .then(answers => {
         const resultSet = new Insert(answers)
-        resultSet.getInsert();
+        resultSet.getInsertRole();
       });
 
     }
