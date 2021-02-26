@@ -42,7 +42,7 @@ class RunApplication {
 
     getInquirerOptions() {
 
-          inquirer
+          return inquirer
           .prompt([
             {
               type: 'list',
@@ -60,12 +60,21 @@ class RunApplication {
             switch(resultSet.queryType) {
               case "View All Departments":
                 resultSet.getViewAllDepartments()
+                console.log("this is after the query")
                 break;
               case "View All Roles":
                 resultSet.getViewAllRoles()
+                console.log("this is after the query")
                 break;
               case "View All employees":
-                resultSet.getViewAllEmployees()
+                async function viewAllEmployees() {
+                  return resultSet.getViewAllEmployees();
+                }
+                viewAllEmployees().then(output => {
+                  //console.log("this is after the query")
+                  this.getInquirerOptions();
+                }); // 1               
+                
                 break;
               case "Add a Department":
                 this.addDepartment()
@@ -339,4 +348,5 @@ connection.query(
     //   }
     // );
 
-*/
+*/ 
+
