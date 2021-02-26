@@ -62,13 +62,37 @@ class RunApplication {
            // console.log(resultSet.queryType);
             switch(resultSet.queryType) {
               case "View All Departments":
-                resultSet.getViewAllDepartments()
-                console.log("this is after the query")
+                // Make the console clean and cleared before new ouput.
+                // This will allow the output to always be top aligned.
+                console.clear() 
+                console.log(message)
+                async function viewAllDepartments() {
+                  return resultSet.getViewAllDepartments();
+                }
+                viewAllDepartments().then(output => {
+                
+                  //console.log("this is after the query")
+                  this.getInquirerOptions();
+                }); // 1   
                 break;
+
               case "View All Roles":
-                resultSet.getViewAllRoles()
+                
                 console.log("this is after the query")
+
+                console.clear() 
+                console.log(message)
+                async function viewAllRoles() {
+                  return resultSet.getViewAllRoles();
+                }
+                viewAllRoles().then(output => {
+                
+                  //console.log("this is after the query")
+                  this.getInquirerOptions();
+                }); // 1   
+
                 break;
+
               case "View All employees":
                 // Make the console clean and cleared before new ouput.
                 // This will allow the output to always be top aligned.
@@ -82,31 +106,37 @@ class RunApplication {
                   //console.log("this is after the query")
                   this.getInquirerOptions();
                 }); // 1               
-                
                 break;
+
               case "Add a Department":
                 this.addDepartment()
                 //resultSet.getAddRole()
                 break;
+
               case "Add a Role":
                 this.addRole()
                 //resultSet.getAddRole()
                 break;
+
               case "Add An Employee":
                 this.addEmployee()
                 //resultSet.getAddRole()
                 break;
+
               case "View All Employees By Department":
                 resultSet.getViewAllEmployeesByDeparment()
                 break;
+
               case "View All Employees by Manager":
                 resultSet.getViewAllEmployeesByManager()
                 break;
+
               case "Add Employee":
                 resultSet.getViewAllEmployeesByManager()
                 break;
+
               default:
-                text = "I have never heard of that fruit...";
+                //
             }
             //this.resultSet = new Sql(answers)
             //resultSet.getAllEmployeesViewTypes();
