@@ -184,7 +184,7 @@ class RunApplication {
 
     addDepartment() {
 
-      inquirer
+     return inquirer
       .prompt([
         {
           type: 'input',
@@ -222,6 +222,18 @@ class RunApplication {
 
     addRole() {
 
+
+      // Create a new instance of our Sql Class to run our Select statements
+      // Pass View All Departments Joined with Roles 
+      const queryName = "View All Departments"
+      const resultSet = new Sql(queryName)
+      //console.log(resultSet.getViewAllDepartments())
+      async function viewAllDepartments() {
+        return resultSet.getViewAllDepartments();
+      }
+
+      viewAllDepartments().then(output => {
+        // Output is the sect query
       inquirer
       .prompt([
         {
@@ -250,25 +262,30 @@ class RunApplication {
             }
           }
       },
-     {
-      type: 'input',
-      name: 'departmentId',
-      message: "Plese enter department id",
-      validate: employeeName => {
-          if (employeeName) {
-            return true;
-          } else {
-            console.log("Please enter department id");
-            return false;
-          }
-        }
-    },
+      {
+        type: 'list',
+        name: 'queryType',
+        message: "To what department this role should be assigned to ?",
+        choices: output
+      },
       ])
       // if answer is true go to next step
       .then(answers => {
         const resultSet = new Insert(answers)
         resultSet.getInsertRole();
       });
+        //return output
+        // Restart Application
+       // this.getInquirerOptions();
+      }); 
+      
+      //console.log(queryOutput)
+      
+     // let variable2 = "test"
+     // let variable1 = [];
+
+
+
 
     }
 
