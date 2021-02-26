@@ -58,8 +58,9 @@ class RunApplication {
           .then(answers => {
             //console.log(answers);
             
+            // Create a new instance of our Sql Class to run our Select statements
             const resultSet = new Sql(answers)
-           // console.log(resultSet.queryType);
+           
             switch(resultSet.queryType) {
               case "View All Departments":
                 // Make the console clean and cleared before new ouput.
@@ -71,31 +72,25 @@ class RunApplication {
                 }
                 viewAllDepartments().then(output => {
                 
-                  //console.log("this is after the query")
+                  // Restart Application
                   this.getInquirerOptions();
-                }); // 1   
+                });  
                 break;
 
               case "View All Roles":
-                
-                console.log("this is after the query")
-
                 console.clear() 
                 console.log(message)
                 async function viewAllRoles() {
                   return resultSet.getViewAllRoles();
                 }
                 viewAllRoles().then(output => {
-                
-                  //console.log("this is after the query")
-                  this.getInquirerOptions();
-                }); // 1   
+                // Restart Application
+                this.getInquirerOptions();
+                });  
 
                 break;
 
               case "View All employees":
-                // Make the console clean and cleared before new ouput.
-                // This will allow the output to always be top aligned.
                 console.clear() 
                 console.log(message)
                 async function viewAllEmployees() {
@@ -103,14 +98,27 @@ class RunApplication {
                 }
                 viewAllEmployees().then(output => {
                 
-                  //console.log("this is after the query")
+                  // Restart Application
                   this.getInquirerOptions();
                 }); // 1               
                 break;
 
               case "Add a Department":
-                this.addDepartment()
+                // Run addDepartment prototype function to deal with insert inquirer questions for add department
                 //resultSet.getAddRole()
+                console.clear() 
+                console.log(message)
+                this.addDepartment();
+                
+                break;
+                // async function addInsertDepartment() {
+                //   return this.addDepartment();
+                // }
+                // addInsertDepartment().then(output => {
+                
+                //   // Restart Application
+                //   this.getInquirerOptions();
+                // }); // 1               
                 break;
 
               case "Add a Role":
@@ -190,12 +198,21 @@ class RunApplication {
                 return false;
               }
             }
-      },
+      }
       ])
       // if answer is true go to next step
       .then(answers => {
         const resultSet = new Insert(answers)
-        resultSet.getInsertDepartment();
+        
+        async function runInsert() {
+          return resultSet.getInsertDepartment();;
+        }
+        runInsert().then(output => {
+          this.getInquirerOptions();
+          // No action required - Placeholder
+        });        
+
+
       });
 
     }
