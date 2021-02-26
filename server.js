@@ -13,6 +13,9 @@ const Sql = require('./lib/Sql');
 
 // Import employee class
 const Insert = require('./lib/Insert');
+
+
+const message = `******************************** EMPLOYEE TRACKER APP ********************************\n`
  
 // create the connection to database
 const connection = mysql.createConnection({
@@ -67,10 +70,15 @@ class RunApplication {
                 console.log("this is after the query")
                 break;
               case "View All employees":
+                // Make the console clean and cleared before new ouput.
+                // This will allow the output to always be top aligned.
+                console.clear() 
+                console.log(message)
                 async function viewAllEmployees() {
                   return resultSet.getViewAllEmployees();
                 }
                 viewAllEmployees().then(output => {
+                
                   //console.log("this is after the query")
                   this.getInquirerOptions();
                 }); // 1               
