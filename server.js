@@ -27,8 +27,10 @@ const connection = mysql.createConnection({
 
 connection.connect(function(err) {
     if (err) throw err;
-    console.log(message);
+    //console.log(message);
     // initiqlize application and call our first prototype function 
+    console.clear();
+    console.log(message);
     new RunApplication().getInquirerOptions();
   });
 
@@ -45,6 +47,9 @@ class RunApplication {
 
     getInquirerOptions() {
 
+          // Clear console.log
+          //console.clear()
+          //console.log(message)
           return inquirer
           .prompt([
             {
@@ -161,10 +166,11 @@ class RunApplication {
       ])
       // if answer is true go to next step
       .then(answers => {
-        const resultSet = new Insert(answers)
+        
+        const resultSet = new Insert(answers )
         
         async function runInsert() {
-          return resultSet.getInsertDepartment();;
+          return resultSet.getInsertDepartment();
         }
         runInsert().then(output => {
           this.getInquirerOptions();
@@ -183,7 +189,7 @@ class RunApplication {
       const resultSet = new Sql(queryName)
       //console.log(resultSet.getViewAllDepartments())
       async function viewAllDepartments() {
-        return resultSet.getViewAllDepartments();
+        return resultSet.getViewAllDepartmentsNames();
       }
 
       viewAllDepartments().then(output => {
@@ -218,15 +224,63 @@ class RunApplication {
       },
       {
         type: 'list',
-        name: 'queryType',
+        name: 'roleDepartment',
         message: "To what department this role should be assigned to ?",
         choices: output
       },
       ])
       // if answer is true go to next step
       .then(answers => {
-        const resultSet = new Insert(answers)
-        resultSet.getInsertRole();
+               // I need to get the deparment ID based on the role selected
+        // from roleDepartment anwer
+        // get deparemnt id only and then pass it to the insert.
+        //console.log(answers);
+       const resultDepIdByName = new Sql(answers)
+       let resultDepIdByNameOutput = ""
+       //console.log(resultDepIdByName.roleDepartment);
+        // Query for unqiue id based on the roleDepartment selection 
+        async function selectQuery() {
+          return resultDepIdByName.getViewAllDepartmentsIdByName();
+        }
+        selectQuery().then(output => {
+         // outputQuery = output 
+          //console.log(output)
+          // Create a varialbe to hold the output from our getViewAllDepartmentsIdByName query.
+          let outputTest = []
+          outputTest = output;
+          // filter array of objects if availalbe into id and then map it to a variable to be sent to the insert (id)
+     
+          
+          outputTest.filter(({ id }) => id)
+          .map(({ id }) => {
+            //console.log(id)
+            outputTest = id
+            //console.log(outputTest);
+          });
+          //console.log(outputTest)
+         // console.log(outputTest)
+
+          const InsertRecord = new Insert(answers, output)
+          async function selectQuery() {
+            return InsertRecord.getInsertRole();;
+          }
+          selectQuery().then(output => {
+            console.clear();
+            
+            console.log(message);
+            console.log("Record Inserted\n");
+            this.getInquirerOptions();
+          })
+          
+          //console.log("inside async function is: " + outputQuery);
+          //console.log(output); // Create global variable to pass into idNumber.
+         // resultDepIdByNameOutput = output;
+         // console.log(output);
+         // this.getInquirerOptions();
+          // No action required - Placeholder
+        });    
+
+        //resultSet.getInsertRole();
       });
         //return output
         // Restart Application
