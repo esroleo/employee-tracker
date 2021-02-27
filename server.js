@@ -27,7 +27,7 @@ const connection = mysql.createConnection({
 
 connection.connect(function(err) {
     if (err) throw err;
-    console.log("Connected!");
+    console.log(message);
     // initiqlize application and call our first prototype function 
     new RunApplication().getInquirerOptions();
   });
@@ -109,16 +109,6 @@ class RunApplication {
                 console.clear() 
                 console.log(message)
                 this.addDepartment();
-                
-                break;
-                // async function addInsertDepartment() {
-                //   return this.addDepartment();
-                // }
-                // addInsertDepartment().then(output => {
-                
-                //   // Restart Application
-                //   this.getInquirerOptions();
-                // }); // 1               
                 break;
 
               case "Add a Role":
@@ -146,39 +136,8 @@ class RunApplication {
               default:
                 //
             }
-            //this.resultSet = new Sql(answers)
-            //resultSet.getAllEmployeesViewTypes();
-            //console.log(this.resultSet)
-            
-            
-            // if (queryType === "View all employees") {
-            //   connection.query(
-            //     `select e.first_name, e.last_name, r.title, dep.name AS department, 
-            //     r.salary,
-            //     IFNULL(CONCAT(m.first_name, ' ' , m.last_name), 'No Manager') AS 'manager'
-            //     from employee AS e
-            //     INNER JOIN role AS r ON e.role_id = r.id 
-            //     INNER JOIN department AS dep ON r.department_id = dep.id
-            //     LEFT JOIN employee AS m ON m.id = e.manager_id
-            //     ORDER BY e.first_name;`,
-            //     function(err, results, fields) {
-            //       const table = cTable.getTable(results);
-            //       console.table(table);
-            //       //console.log(results);
-            //       //console.log(results);
-            //       //console.log(results); // results contains rows returned by server
-            //       //console.log(fields); // fields contains extra meta data about results, if available
-            //     }
-            //   );
-            // }
-            //this.employeeType = employeeType;
-            //this.getFurtherInformation();
           });
           
-          
-    
-
-
     }
 
 
@@ -211,17 +170,12 @@ class RunApplication {
           this.getInquirerOptions();
           // No action required - Placeholder
         });        
-
-
       });
 
     }
 
 
-    
-
     addRole() {
-
 
       // Create a new instance of our Sql Class to run our Select statements
       // Pass View All Departments Joined with Roles 
@@ -283,10 +237,6 @@ class RunApplication {
       
      // let variable2 = "test"
      // let variable1 = [];
-
-
-
-
     }
 
     addEmployee() {
@@ -355,70 +305,4 @@ class RunApplication {
 
     }
 
-
-
-
 }
-
-//new RunApplication().getInquirerOptions();
-
-
-
-/*
-    // View All Employees
-connection.query(
-  `select e.first_name, e.last_name, r.title, dep.name AS department, 
-  r.salary,
-  IFNULL(CONCAT(m.first_name, ' ' , m.last_name), 'No Manager') AS 'manager'
-  from employee AS e
-  INNER JOIN role AS r ON e.role_id = r.id 
-  INNER JOIN department AS dep ON r.department_id = dep.id
-  LEFT JOIN employee AS m ON m.id = e.manager_id
-  ORDER BY e.first_name;`,
-  function(err, results, fields) {
-    const table = cTable.getTable(results);
-    console.table(table);
-    //console.log(results);
-    //console.log(results); // results contains rows returned by server
-    //console.log(fields); // fields contains extra meta data about results, if available
-  }
-);
-
-    // View employee with manager
-    connection.query(
-      `select IFNULL(CONCAT(m.first_name, ', ' , m.last_name), 'No Manager') AS 'Manager', e.first_name AS 'Direct report'
-      from employee AS e LEFT JOIN employee m ON m.id = e.manager_id 
-      ORDER BY Manager;`,
-      function(err, results, fields) {
-        const table = cTable.getTable(results);
-        console.table(table);
-        //console.log(results);
-        //console.log(results); // results contains rows returned by server
-        //console.log(fields); // fields contains extra meta data about results, if available
-      }
-    );
-
-  // // simple query
-  // connection.query(
-  //   'SELECT * FROM role',
-  //   function(err, results, fields) {
-  //     const table = cTable.getTable(results);
-  //     console.table(table);
-  //     //console.log(results); // results contains rows returned by server
-  //     //console.log(fields); // fields contains extra meta data about results, if available
-  //   }
-  // );
-
-    // // simple query
-    // connection.query(
-    //   'SELECT * FROM employee',
-    //   function(err, results, fields) {
-    //     const table = cTable.getTable(results);
-    //     console.table(table);
-    //     //console.log(results); // results contains rows returned by server
-    //     //console.log(fields); // fields contains extra meta data about results, if available
-    //   }
-    // );
-
-*/ 
-
