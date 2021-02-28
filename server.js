@@ -403,6 +403,3 @@ class RunApplication {
     })
   }
 }
-
-
-new RunApplication().getInquirerOptions();
