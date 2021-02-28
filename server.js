@@ -16,7 +16,7 @@ const Update = require('./lib/Update');
 
 
 
-const message = `******************************** EMPLOYEE TRACKER APP ********************************\n`
+
  
 // create the connection to database
 const connection = mysql.createConnection({
@@ -30,7 +30,7 @@ connection.connect(function(err) {
     if (err) throw err;
     // initiqlize application and call our first prototype function 
     console.clear();
-    console.log(message);
+    console.log(this.appLogo);
     new RunApplication().getInquirerOptions();
   });
 
@@ -38,13 +38,25 @@ connection.connect(function(err) {
 class RunApplication {
   constructor () {
       // *** N/A for this app. Could be used for the future. *** //
+
+      this.appLogo = `
+      ╔═╗┌┬┐┌─┐┬  ┌─┐┬ ┬┌─┐┌─┐  ╔╦╗┬─┐┌─┐┌─┐┬┌─┌─┐┬─┐
+      ║╣ │││├─┘│  │ │└┬┘├┤ ├┤    ║ ├┬┘├─┤│  ├┴┐├┤ ├┬┘
+      ╚═╝┴ ┴┴  ┴─┘└─┘ ┴ └─┘└─┘   ╩ ┴└─┴ ┴└─┘┴ ┴└─┘┴└─
+                      ╔═╗╔═╗╔═╗                      
+                      ║ ║║ ║╠═╝                      
+                      ╚═╝╚═╝╩                              
+      \n`
+      console.clear();
+      console.log(this.appLogo)
+      
     }
 
     getInquirerOptions() {
 
           // Clear console.log
           //console.clear()
-          //console.log(message)
+          //console.log(this.appLogo)
           return inquirer
           .prompt([
             {
@@ -64,7 +76,7 @@ class RunApplication {
                 // Make the console clean and cleared before new ouput.
                 // This will allow the output to always be top aligned.
                 console.clear() 
-                console.log(message)
+                console.log(this.appLogo)
                 async function viewAllDepartments() {
                   return resultSet.getViewAllDepartments();
                 }
@@ -77,7 +89,7 @@ class RunApplication {
 
               case "View All Roles":
                 console.clear() 
-                console.log(message)
+                console.log(this.appLogo)
                 async function viewAllRoles() {
                   return resultSet.getViewAllRoles();
                 }
@@ -89,7 +101,7 @@ class RunApplication {
 
               case "View All employees":
                 console.clear() 
-                console.log(message)
+                console.log(this.appLogo)
                 async function viewAllEmployees() {
                   return resultSet.getViewAllEmployees();
                 }
@@ -102,7 +114,7 @@ class RunApplication {
               case "Add a Department":
                 // Run addDepartment prototype function to deal with insert inquirer questions for add department
                 console.clear() 
-                console.log(message)
+                console.log(this.appLogo)
                 this.addDepartment();
                 break;
 
@@ -247,7 +259,7 @@ class RunApplication {
           }
           selectQuery().then(output => {
             console.clear();
-            console.log(message);
+            console.log(this.appLogo);
             console.log("Record Inserted\n");
             this.getInquirerOptions();
           });
@@ -326,7 +338,7 @@ class RunApplication {
         }
         insertQuery().then(output => {
          // console.clear();
-          console.log(message);
+          console.log(this.appLogo);
           console.log("Record Inserted\n");
           this.getInquirerOptions();
         });
@@ -370,7 +382,7 @@ class RunApplication {
         }
         updateQuery().then(output => {
           console.clear();
-          console.log(message);
+          console.log(this.appLogo);
           console.log(output + '\n');
           //console.log("Record Updated\n");
           this.getInquirerOptions();
