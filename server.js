@@ -120,11 +120,29 @@ class RunApplication {
 
                  
               case "View All Employees By Department":
-                resultSet.getViewAllEmployeesByDeparment()
+
+                async function runQueryEmployeeByDepartment() {
+                  return resultSet.getViewAllEmployeesByDeparment()
+                }
+                runQueryEmployeeByDepartment().then(output => {
+                  console.clear();
+                  console.log(message);
+                  console.log(output);
+                  this.getInquirerOptions();
+                });  
                 break;
 
               case "View All Employees by Manager":
-                resultSet.getViewAllEmployeesByManager()
+                
+                async function runQueryEmployeeByManager() {
+                  return resultSet.getViewAllEmployeesByManager();
+                }
+                runQueryEmployeeByManager().then(output => {
+                  console.clear();
+                  console.log(message);
+                  console.log(output);
+                  this.getInquirerOptions();
+                });     
                 break;
 
               case "Add Employee":
