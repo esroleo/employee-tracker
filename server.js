@@ -16,7 +16,16 @@ const Update = require('./lib/Update');
 
 
 
-const message = `******************************** EMPLOYEE TRACKER APP ********************************\n`
+const message = `
+
+╔═╗┌┬┐┌─┐┬  ┌─┐┬ ┬┌─┐┌─┐  ╔╦╗┌─┐┌─┐┬┌─┌─┐┬─┐  ╔═╗╔═╗╔═╗  
+║╣ │││├─┘│  │ │└┬┘├┤ ├┤    ║ ├─┤│  ├┴┐├┤ ├┬┘  ╠═╣╠═╝╠═╝  
+╚═╝┴ ┴┴  ┴─┘└─┘ ┴ └─┘└─┘   ╩ ┴ ┴└─┘┴ ┴└─┘┴└─  ╩ ╩╩  ╩    
+                       ╔═╗╔═╗╔═╗                         
+─────────────────────  ║ ║║ ║╠═╝  ─────────────────────  
+                       ╚═╝╚═╝╩                           
+                                                                                                                                                                   
+\n`
  
 // create the connection to database
 const connection = mysql.createConnection({
@@ -145,12 +154,8 @@ class RunApplication {
                 });     
                 break;
 
-              case "Add Employee":
-                resultSet.getViewAllEmployeesByManager()
-                break;
-
               default:
-                //
+                // No in use.
             }
           });
           
@@ -343,9 +348,9 @@ class RunApplication {
           return InsertRecord.getInsertEmployee();
         }
         insertQuery().then(output => {
-         // console.clear();
+          console.clear();
           console.log(message);
-          console.log("Record Inserted\n");
+          console.log("Employee Added\n");
           this.getInquirerOptions();
         });
       });
