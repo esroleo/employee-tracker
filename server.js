@@ -11,8 +11,12 @@ const cTable = require('console.table');
 // Import employee class
 const Sql = require('./lib/Sql');
 
-// Import employee class
+// Import Insert class
 const Insert = require('./lib/Insert');
+
+// Import Update class
+const Update = require('./lib/Update');
+
 
 
 const message = `******************************** EMPLOYEE TRACKER APP ********************************\n`
@@ -56,7 +60,7 @@ class RunApplication {
               type: 'list',
               name: 'queryType',
               message: "What would you like to do?",
-              choices: ['View All Departments','View All Roles', 'View All employees', 'Add a Department', 'Add a Role', 'Add An Employee', 'Update Employee Role', 'View All Employees By Department', 'View All Employees by Manager', 'Add Employee']
+              choices: ['View All Departments','View All Roles', 'View All employees', 'Add a Department', 'Add a Role', 'Add An Employee', 'Update Employee Role', 'View All Employees By Department', 'View All Employees by Manager']
             }
           ])
           // if answer is true go to next step
@@ -126,6 +130,10 @@ class RunApplication {
                 //resultSet.getAddRole()
                 break;
 
+              case "Update Employee Role":
+                this.updateEmployeRole();
+                break;
+
               case "View All Employees By Department":
                 resultSet.getViewAllEmployeesByDeparment()
                 break;
@@ -193,7 +201,7 @@ class RunApplication {
       }
 
       viewAllDepartments().then(output => {
-        console.log(output)
+        //console.log(output)
         // Output is the sect query
       inquirer
       .prompt([
@@ -375,6 +383,63 @@ class RunApplication {
         //resultSet.getInsertEmployee();
       })
 
+    })
+  }
+
+  updateEmployeRole() {
+    
+    const queryName = "View All Departments"
+    const resultSet = new Sql(queryName)
+    //resultSet.getTestQuery();
+
+    async function testQuery() {
+      return resultSet.getTestQuery();
+    }
+    testQuery().then(output => {
+      //console.log(output)
+      //console.log(output[0])
+      //console.log(output);
+     // let employeeRoleObject = output[0]
+      //let employeeManagerObject = output[1]
+      let employeeList = output[2]
+      let roleList = output[3]
+      //console.log(employeeRoleObject)
+      //console.log(employeeList[2])
+      // const test1 = output[0]
+      // console.log(test1)
+
+      inquirer
+      .prompt([
+        {
+          type: 'list',
+          name: 'employeName',
+          message: "Please choose an employee to update their role",
+          choices: employeeList
+        },
+        {
+          type: 'list',
+          name: 'newRole',
+          message: "Please enter a new role?",
+          choices: roleList
+        }
+      ])
+      .then(answers => {
+
+        const InsertRecord = new Update(answers)
+        async function updateQuery() {
+          return InsertRecord.getUpdateEmployee();
+        }
+        updateQuery().then(output => {
+          console.clear();
+          console.log(message);
+          console.log(output + '\n');
+          //console.log("Record Updated\n");
+          this.getInquirerOptions();
+        })
+            //console.log(answers);
+        //resultSet.getInsertEmployee();
+
+      })
     })
   }
 }
