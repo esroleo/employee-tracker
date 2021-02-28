@@ -23,7 +23,7 @@ This application is a content management systems CMS running as part of a comman
 
 ### Major tech snapshot
 
-![tech](./public/assets/images/technologies-used.JPG?raw=true "technologies-used.JPG")
+![tech](./assets/images/technologies_used.JPG?raw=true "technologies_used.JPG")
 
 <a name="web-address"></a>
 ## 2. How to Get There
@@ -35,6 +35,17 @@ https://github.com/esroleo/employee-tracker
 
 <a name="usage"></a>
 ## 3. Usage Tips
+
+For more information - Please visit the following videos on how the application works and some background information on OOP build.
+
+Part 1
+
+https://www.awesomescreenshot.com/video/2901949?key=58e4bdbc2b6ad1b74bdc96e7b8616fe7
+
+
+Part 2
+
+https://www.awesomescreenshot.com/video/2901976
 
 If you want to run locally preform the following:
 
