@@ -81,6 +81,10 @@ Example
 
 ![step](./assets/images/main_view_departments.JPG?raw=true "main_view_departments")
 
+### Exit Application
+
+Select "Exit Application" then ctrl+c to return to command prompt.
+
 <a name="credits"></a>
 ## 5. Credits
 
