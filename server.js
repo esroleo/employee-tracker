@@ -225,12 +225,12 @@ class RunApplication {
       {
         type: 'input',
         name: 'salary',
-        message: "What is the role's salary?",
+        message: `What is the role's salary (Number with up to two decimal places)?`,
         validate: employeeName => {
-            if (employeeName) {
+            if (Number(employeeName)) {
               return true;
             } else {
-              console.log("Please enter role's salary");
+              console.log("Please enter role's salary in numbers.");
               return false;
             }
           }
@@ -350,6 +350,7 @@ class RunApplication {
         }
         insertQuery().then(output => {
          // console.clear();
+         console.clear();
           console.log(this.appLogo);
           console.log("Record Inserted\n");
           this.getInquirerOptions();
