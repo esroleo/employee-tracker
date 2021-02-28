@@ -5,9 +5,6 @@ const mysql = require('mysql2');
 // import inquirer libraries
 const inquirer = require('inquirer');
 
-// npm library console.table to display tabulated format at console log
-const cTable = require('console.table');
-
 // Import employee class
 const Sql = require('./lib/Sql');
 
@@ -31,7 +28,6 @@ const connection = mysql.createConnection({
 
 connection.connect(function(err) {
     if (err) throw err;
-    //console.log(message);
     // initiqlize application and call our first prototype function 
     console.clear();
     console.log(message);
@@ -41,12 +37,7 @@ connection.connect(function(err) {
 
 class RunApplication {
   constructor () {
-      // *** Hold object arrays *** //
-      this.manager = [];
-      this.engineer = [];
-      this.intern = []
-      // *** Used for conditional chesk **//
-      //this.resultSet = "";
+      // *** N/A for this app. Could be used for the future. *** //
     }
 
     getInquirerOptions() {
@@ -65,8 +56,6 @@ class RunApplication {
           ])
           // if answer is true go to next step
           .then(answers => {
-            //console.log(answers);
-            
             // Create a new instance of our Sql Class to run our Select statements
             const resultSet = new Sql(answers)
            
@@ -96,7 +85,6 @@ class RunApplication {
                 // Restart Application
                 this.getInquirerOptions();
                 });  
-
                 break;
 
               case "View All employees":
@@ -106,7 +94,6 @@ class RunApplication {
                   return resultSet.getViewAllEmployees();
                 }
                 viewAllEmployees().then(output => {
-                
                   // Restart Application
                   this.getInquirerOptions();
                 }); // 1               
@@ -114,7 +101,6 @@ class RunApplication {
 
               case "Add a Department":
                 // Run addDepartment prototype function to deal with insert inquirer questions for add department
-                //resultSet.getAddRole()
                 console.clear() 
                 console.log(message)
                 this.addDepartment();
@@ -122,18 +108,17 @@ class RunApplication {
 
               case "Add a Role":
                 this.addRole()
-                //resultSet.getAddRole()
                 break;
 
               case "Add An Employee":
                 this.addEmployee()
-                //resultSet.getAddRole()
                 break;
 
               case "Update Employee Role":
                 this.updateEmployeRole();
                 break;
 
+                 
               case "View All Employees By Department":
                 resultSet.getViewAllEmployeesByDeparment()
                 break;
@@ -172,17 +157,14 @@ class RunApplication {
             }
       }
       ])
-      // if answer is true go to next step
       .then(answers => {
         
         const resultSet = new Insert(answers )
-        
         async function runInsert() {
           return resultSet.getInsertDepartment();
         }
         runInsert().then(output => {
           this.getInquirerOptions();
-          // No action required - Placeholder
         });        
       });
 
@@ -195,14 +177,12 @@ class RunApplication {
       // Pass View All Departments Joined with Roles 
       const queryName = "View All Departments"
       const resultSet = new Sql(queryName)
-      //console.log(resultSet.getViewAllDepartments())
       async function viewAllDepartments() {
         return resultSet.getViewAllDepartmentsNames();
       }
 
       viewAllDepartments().then(output => {
-        //console.log(output)
-        // Output is the sect query
+
       inquirer
       .prompt([
         {
@@ -240,34 +220,26 @@ class RunApplication {
       ])
       // if answer is true go to next step
       .then(answers => {
-               // I need to get the deparment ID based on the role selected
+        // I need to get the deparment ID based on the role selected
         // from roleDepartment anwer
         // get deparemnt id only and then pass it to the insert.
-        //console.log(answers);
        const resultDepIdByName = new Sql(answers)
        let resultDepIdByNameOutput = ""
-       //console.log(resultDepIdByName.roleDepartment);
         // Query for unqiue id based on the roleDepartment selection 
         async function selectQuery() {
           return resultDepIdByName.getViewAllDepartmentsIdByName();
         }
         selectQuery().then(output => {
-         // outputQuery = output 
-          //console.log(output)
           // Create a varialbe to hold the output from our getViewAllDepartmentsIdByName query.
           let outputTest = []
           outputTest = output;
-          // filter array of objects if availalbe into id and then map it to a variable to be sent to the insert (id)
-     
-          
+          // filter array of objects if availalbe into id and then map it to a variable to be sent to the insert (id) 
           outputTest.filter(({ id }) => id)
           .map(({ id }) => {
             //console.log(id)
             outputTest = id
-            //console.log(outputTest);
+
           });
-          //console.log(outputTest)
-         // console.log(outputTest)
 
           const InsertRecord = new Insert(answers, output)
           async function selectQuery() {
@@ -275,32 +247,14 @@ class RunApplication {
           }
           selectQuery().then(output => {
             console.clear();
-            
             console.log(message);
             console.log("Record Inserted\n");
             this.getInquirerOptions();
-          })
-          
-          //console.log("inside async function is: " + outputQuery);
-          //console.log(output); // Create global variable to pass into idNumber.
-         // resultDepIdByNameOutput = output;
-         // console.log(output);
-         // this.getInquirerOptions();
-          // No action required - Placeholder
+          });
         });    
-
-        //resultSet.getInsertRole();
       });
-        //return output
-        // Restart Application
-       // this.getInquirerOptions();
-      }); 
-      
-      //console.log(queryOutput)
-      
-     // let variable2 = "test"
-     // let variable1 = [];
-    }
+    }); 
+  };
 
     addEmployee() {
 
@@ -308,22 +262,19 @@ class RunApplication {
       const resultSet = new Sql(queryName)
       //resultSet.getTestQuery();
 
-      async function testQuery() {
-        return resultSet.getTestQuery();
+      async function mutipleQuery() {
+        return resultSet.getMultipleQuery();
       }
 
-      testQuery().then(output => {
-        //console.log(output)
-        //console.log(output[0])
-        //console.log(output);
+      mutipleQuery().then(output => {
+
+        // Assign variables to hold the array of object from our multiple query statement.
         let employeeRoleObject = output[0]
         let employeeManagerObject = output[1]
-        console.log(employeeRoleObject)
-        console.log(employeeManagerObject)
-        // const test1 = output[0]
-        // console.log(test1)
-
-
+        // Add a No Manager at end of list of managers.
+        // When attempted to insert after answers a 'No Manager' it will return undefined = null at DB.
+        output[1].push({name: 'No Manager'});
+        
         
       inquirer
       .prompt([
@@ -374,39 +325,27 @@ class RunApplication {
           return InsertRecord.getInsertEmployee();
         }
         insertQuery().then(output => {
-          console.clear();
+         // console.clear();
           console.log(message);
           console.log("Record Inserted\n");
           this.getInquirerOptions();
-        })
-            //console.log(answers);
-        //resultSet.getInsertEmployee();
-      })
-
-    })
-  }
+        });
+      });
+    });
+  };
 
   updateEmployeRole() {
     
     const queryName = "View All Departments"
     const resultSet = new Sql(queryName)
-    //resultSet.getTestQuery();
-
-    async function testQuery() {
-      return resultSet.getTestQuery();
+    async function multipleQuery() {
+      return resultSet.getMultipleQuery();
     }
-    testQuery().then(output => {
-      //console.log(output)
-      //console.log(output[0])
-      //console.log(output);
-     // let employeeRoleObject = output[0]
-      //let employeeManagerObject = output[1]
+    multipleQuery().then(output => {
+      // Assign variables to hold the array of object from our multiple query statement.
       let employeeList = output[2]
       let roleList = output[3]
-      //console.log(employeeRoleObject)
-      //console.log(employeeList[2])
-      // const test1 = output[0]
-      // console.log(test1)
+
 
       inquirer
       .prompt([
@@ -436,9 +375,6 @@ class RunApplication {
           //console.log("Record Updated\n");
           this.getInquirerOptions();
         })
-            //console.log(answers);
-        //resultSet.getInsertEmployee();
-
       })
     })
   }
