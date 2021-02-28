@@ -16,20 +16,6 @@ const Update = require('./lib/Update');
 
 
 
-
-<<<<<<< HEAD
-const message = `
-
-╔═╗┌┬┐┌─┐┬  ┌─┐┬ ┬┌─┐┌─┐  ╔╦╗┌─┐┌─┐┬┌─┌─┐┬─┐  ╔═╗╔═╗╔═╗  
-║╣ │││├─┘│  │ │└┬┘├┤ ├┤    ║ ├─┤│  ├┴┐├┤ ├┬┘  ╠═╣╠═╝╠═╝  
-╚═╝┴ ┴┴  ┴─┘└─┘ ┴ └─┘└─┘   ╩ ┴ ┴└─┘┴ ┴└─┘┴└─  ╩ ╩╩  ╩    
-                       ╔═╗╔═╗╔═╗                         
-─────────────────────  ║ ║║ ║╠═╝  ─────────────────────  
-                       ╚═╝╚═╝╩                           
-                                                                                                                                                                   
-\n`
-=======
->>>>>>> feature/update-employee
  
 // create the connection to database
 const connection = mysql.createConnection({
@@ -42,15 +28,9 @@ const connection = mysql.createConnection({
 connection.connect(function(err) {
     if (err) throw err;
     // initiqlize application and call our first prototype function 
-<<<<<<< HEAD
-
-    // const test = new RunApplication()
-    // test.getInquirerOptions();
-=======
     console.clear();
     console.log(this.appLogo);
     new RunApplication().getInquirerOptions();
->>>>>>> feature/update-employee
   });
 
 
@@ -58,26 +38,6 @@ class RunApplication {
   constructor () {
       // *** N/A for this app. Could be used for the future. *** //
 
-<<<<<<< HEAD
-    
-      this.applicationLogo = `
-
-      ╔═╗┌┬┐┌─┐┬  ┌─┐┬ ┬┌─┐┌─┐  ╔╦╗┌─┐┌─┐┬┌─┌─┐┬─┐  ╔═╗╔═╗╔═╗  
-      ║╣ │││├─┘│  │ │└┬┘├┤ ├┤    ║ ├─┤│  ├┴┐├┤ ├┬┘  ╠═╣╠═╝╠═╝  
-      ╚═╝┴ ┴┴  ┴─┘└─┘ ┴ └─┘└─┘   ╩ ┴ ┴└─┘┴ ┴└─┘┴└─  ╩ ╩╩  ╩    
-                             ╔═╗╔═╗╔═╗                         
-      ─────────────────────  ║ ║║ ║╠═╝  ─────────────────────  
-                             ╚═╝╚═╝╩                           
-                                                                                                                                                                         
-      \n`
-      console.clear()
-      console.log(this.applicationLogo)
-      
-    }
-
-    consoleClear() {
-      this.consoleClear();
-=======
       this.appLogo = `
       ╔═╗┌┬┐┌─┐┬  ┌─┐┬ ┬┌─┐┌─┐  ╔╦╗┬─┐┌─┐┌─┐┬┌─┌─┐┬─┐
       ║╣ │││├─┘│  │ │└┬┘├┤ ├┤    ║ ├┬┘├─┤│  ├┴┐├┤ ├┬┘
@@ -89,20 +49,14 @@ class RunApplication {
       console.clear();
       console.log(this.appLogo)
       
->>>>>>> feature/update-employee
     }
 
     getInquirerOptions() {
 
           // Clear console.log
           //console.clear()
-<<<<<<< HEAD
-          //console.log(this.applicationLogo)
-           return inquirer
-=======
           //console.log(this.appLogo)
           return inquirer
->>>>>>> feature/update-employee
           .prompt([
             {
               type: 'list',
@@ -121,11 +75,7 @@ class RunApplication {
                 // Make the console clean and cleared before new ouput.
                 // This will allow the output to always be top aligned.
                 console.clear() 
-<<<<<<< HEAD
-                console.log(this.applicationLogo)
-=======
                 console.log(this.appLogo)
->>>>>>> feature/update-employee
                 async function viewAllDepartments() {
                   return resultSet.getViewAllDepartments();
                 }
@@ -138,11 +88,7 @@ class RunApplication {
 
               case "View All Roles":
                 console.clear() 
-<<<<<<< HEAD
-                console.log(this.applicationLogo)
-=======
                 console.log(this.appLogo)
->>>>>>> feature/update-employee
                 async function viewAllRoles() {
                   return resultSet.getViewAllRoles();
                 }
@@ -154,11 +100,7 @@ class RunApplication {
 
               case "View All employees":
                 console.clear() 
-<<<<<<< HEAD
-                console.log(this.applicationLogo)
-=======
                 console.log(this.appLogo)
->>>>>>> feature/update-employee
                 async function viewAllEmployees() {
                   return resultSet.getViewAllEmployees();
                 }
@@ -171,11 +113,7 @@ class RunApplication {
               case "Add a Department":
                 // Run addDepartment prototype function to deal with insert inquirer questions for add department
                 console.clear() 
-<<<<<<< HEAD
-                console.log(this.applicationLogo)
-=======
                 console.log(this.appLogo)
->>>>>>> feature/update-employee
                 this.addDepartment();
                 break;
 
@@ -332,13 +270,8 @@ class RunApplication {
             return InsertRecord.getInsertRole();;
           }
           selectQuery().then(output => {
-<<<<<<< HEAD
-            this.consoleClear();
-            console.log(this.applicationLogo);
-=======
             console.clear();
             console.log(this.appLogo);
->>>>>>> feature/update-employee
             console.log("Record Inserted\n");
             this.getInquirerOptions();
           });
@@ -416,15 +349,9 @@ class RunApplication {
           return InsertRecord.getInsertEmployee();
         }
         insertQuery().then(output => {
-<<<<<<< HEAD
-          this.consoleClear();
-          console.log(this.applicationLogo);
-          console.log("Employee Added\n");
-=======
          // console.clear();
           console.log(this.appLogo);
           console.log("Record Inserted\n");
->>>>>>> feature/update-employee
           this.getInquirerOptions();
         });
       });
@@ -466,13 +393,8 @@ class RunApplication {
           return InsertRecord.getUpdateEmployee();
         }
         updateQuery().then(output => {
-<<<<<<< HEAD
-          this.consoleClear();
-          console.log(this.applicationLogo);
-=======
           console.clear();
           console.log(this.appLogo);
->>>>>>> feature/update-employee
           console.log(output + '\n');
           //console.log("Record Updated\n");
           this.getInquirerOptions();
