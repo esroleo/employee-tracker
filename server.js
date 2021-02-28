@@ -16,6 +16,7 @@ const Update = require('./lib/Update');
 
 
 
+
 const message = `
 
 ╔═╗┌┬┐┌─┐┬  ┌─┐┬ ┬┌─┐┌─┐  ╔╦╗┌─┐┌─┐┬┌─┌─┐┬─┐  ╔═╗╔═╗╔═╗  
@@ -38,29 +39,48 @@ const connection = mysql.createConnection({
 connection.connect(function(err) {
     if (err) throw err;
     // initiqlize application and call our first prototype function 
-    console.clear();
-    console.log(message);
-    new RunApplication().getInquirerOptions();
+
+    // const test = new RunApplication()
+    // test.getInquirerOptions();
   });
 
 
 class RunApplication {
   constructor () {
       // *** N/A for this app. Could be used for the future. *** //
+
+    
+      this.applicationLogo = `
+
+      ╔═╗┌┬┐┌─┐┬  ┌─┐┬ ┬┌─┐┌─┐  ╔╦╗┌─┐┌─┐┬┌─┌─┐┬─┐  ╔═╗╔═╗╔═╗  
+      ║╣ │││├─┘│  │ │└┬┘├┤ ├┤    ║ ├─┤│  ├┴┐├┤ ├┬┘  ╠═╣╠═╝╠═╝  
+      ╚═╝┴ ┴┴  ┴─┘└─┘ ┴ └─┘└─┘   ╩ ┴ ┴└─┘┴ ┴└─┘┴└─  ╩ ╩╩  ╩    
+                             ╔═╗╔═╗╔═╗                         
+      ─────────────────────  ║ ║║ ║╠═╝  ─────────────────────  
+                             ╚═╝╚═╝╩                           
+                                                                                                                                                                         
+      \n`
+      console.clear()
+      console.log(this.applicationLogo)
+      
+    }
+
+    consoleClear() {
+      this.consoleClear();
     }
 
     getInquirerOptions() {
 
           // Clear console.log
           //console.clear()
-          //console.log(message)
-          return inquirer
+          //console.log(this.applicationLogo)
+           return inquirer
           .prompt([
             {
               type: 'list',
               name: 'queryType',
               message: "What would you like to do?",
-              choices: ['View All Departments','View All Roles', 'View All employees', 'Add a Department', 'Add a Role', 'Add An Employee', 'Update Employee Role', 'View All Employees By Department', 'View All Employees by Manager']
+              choices: ['View All Departments','View All Roles', 'View All employees', 'Add a Department', 'Add a Role', 'Add An Employee', 'Update Employee Role', 'View All Employees By Department', 'View All Employees by Manager', 'Exit Application']
             }
           ])
           // if answer is true go to next step
@@ -73,7 +93,7 @@ class RunApplication {
                 // Make the console clean and cleared before new ouput.
                 // This will allow the output to always be top aligned.
                 console.clear() 
-                console.log(message)
+                console.log(this.applicationLogo)
                 async function viewAllDepartments() {
                   return resultSet.getViewAllDepartments();
                 }
@@ -86,7 +106,7 @@ class RunApplication {
 
               case "View All Roles":
                 console.clear() 
-                console.log(message)
+                console.log(this.applicationLogo)
                 async function viewAllRoles() {
                   return resultSet.getViewAllRoles();
                 }
@@ -98,7 +118,7 @@ class RunApplication {
 
               case "View All employees":
                 console.clear() 
-                console.log(message)
+                console.log(this.applicationLogo)
                 async function viewAllEmployees() {
                   return resultSet.getViewAllEmployees();
                 }
@@ -111,7 +131,7 @@ class RunApplication {
               case "Add a Department":
                 // Run addDepartment prototype function to deal with insert inquirer questions for add department
                 console.clear() 
-                console.log(message)
+                console.log(this.applicationLogo)
                 this.addDepartment();
                 break;
 
@@ -134,8 +154,8 @@ class RunApplication {
                   return resultSet.getViewAllEmployeesByDeparment()
                 }
                 runQueryEmployeeByDepartment().then(output => {
-                  console.clear();
-                  console.log(message);
+                  this.consoleClear();
+                  console.log(this.applicationLogo);
                   console.log(output);
                   this.getInquirerOptions();
                 });  
@@ -147,21 +167,20 @@ class RunApplication {
                   return resultSet.getViewAllEmployeesByManager();
                 }
                 runQueryEmployeeByManager().then(output => {
-                  console.clear();
-                  console.log(message);
+                  this.consoleClear();
+                  console.log(this.applicationLogo);
                   console.log(output);
                   this.getInquirerOptions();
                 });     
                 break;
 
-              default:
-                // No in use.
+               case "Exit Application":             
+               break; // Break from application              
             }
-          });
-          
+          })
     }
 
-
+   
     addDepartment() {
 
      return inquirer
@@ -269,8 +288,8 @@ class RunApplication {
             return InsertRecord.getInsertRole();;
           }
           selectQuery().then(output => {
-            console.clear();
-            console.log(message);
+            this.consoleClear();
+            console.log(this.applicationLogo);
             console.log("Record Inserted\n");
             this.getInquirerOptions();
           });
@@ -348,8 +367,8 @@ class RunApplication {
           return InsertRecord.getInsertEmployee();
         }
         insertQuery().then(output => {
-          console.clear();
-          console.log(message);
+          this.consoleClear();
+          console.log(this.applicationLogo);
           console.log("Employee Added\n");
           this.getInquirerOptions();
         });
@@ -392,8 +411,8 @@ class RunApplication {
           return InsertRecord.getUpdateEmployee();
         }
         updateQuery().then(output => {
-          console.clear();
-          console.log(message);
+          this.consoleClear();
+          console.log(this.applicationLogo);
           console.log(output + '\n');
           //console.log("Record Updated\n");
           this.getInquirerOptions();
@@ -402,3 +421,6 @@ class RunApplication {
     })
   }
 }
+
+
+new RunApplication().getInquirerOptions();
