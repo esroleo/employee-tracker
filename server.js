@@ -361,8 +361,6 @@ class RunApplication {
       // if answer is true go to next step
       .then(answers => {
     
-     
-
         const InsertRecord = new Insert(answers)
         async function insertQuery() {
           return InsertRecord.getInsertEmployee();
