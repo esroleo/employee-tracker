@@ -136,7 +136,7 @@ class RunApplication {
                   return resultSet.getViewAllEmployeesByDeparment()
                 }
                 runQueryEmployeeByDepartment().then(output => {
-                  this.consoleClear();
+                  console.clear();
                   console.log(this.applicationLogo);
                   console.log(output);
                   this.getInquirerOptions();
@@ -149,7 +149,7 @@ class RunApplication {
                   return resultSet.getViewAllEmployeesByManager();
                 }
                 runQueryEmployeeByManager().then(output => {
-                  this.consoleClear();
+                  console.clear();
                   console.log(this.applicationLogo);
                   console.log(output);
                   this.getInquirerOptions();
