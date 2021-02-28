@@ -193,6 +193,7 @@ class RunApplication {
       }
 
       viewAllDepartments().then(output => {
+        console.log(output)
         // Output is the sect query
       inquirer
       .prompt([
@@ -295,6 +296,27 @@ class RunApplication {
 
     addEmployee() {
 
+      const queryName = "View All Departments"
+      const resultSet = new Sql(queryName)
+      //resultSet.getTestQuery();
+
+      async function testQuery() {
+        return resultSet.getTestQuery();
+      }
+
+      testQuery().then(output => {
+        //console.log(output)
+        //console.log(output[0])
+        //console.log(output);
+        let employeeRoleObject = output[0]
+        let employeeManagerObject = output[1]
+        console.log(employeeRoleObject)
+        console.log(employeeManagerObject)
+        // const test1 = output[0]
+        // console.log(test1)
+
+
+        
       inquirer
       .prompt([
         {
@@ -323,40 +345,38 @@ class RunApplication {
             }
           }
       },
-     {
-      type: 'input',
-      name: 'employeeRole',
-      message: "What is the employee's role?",
-      validate: employeeRole => {
-          if (employeeRole) {
-            return true;
-          } else {
-            console.log("Please enter employee's role");
-            return false;
-          }
-        }
-    },
+      {
+        type: 'list',
+        name: 'employeeRole',
+        message: "To what department this role should be assigned to ?",
+        choices: employeeRoleObject
+      },
     {
       type: 'list',
       name: 'employeeManager',
-      message: "Who is the employee's manager?",
-      choices: ['Ashley Rodriguez','John Doe', 'Sara Lourd', 'No Manager'],
-      validate: employeeManager => {
-          if (employeeManager) {
-            return true;
-          } else {
-            console.log("Please enter employee's role");
-            return false;
-          }
-        }
-    },
+      message: "To what manager would you like the user to be added to?",
+      choices: employeeManagerObject
+    }
       ])
       // if answer is true go to next step
       .then(answers => {
-        const resultSet = new Insert(answers)
-        resultSet.getInsertEmployee();
-      });
+    
+     
 
-    }
+        const InsertRecord = new Insert(answers)
+        async function insertQuery() {
+          return InsertRecord.getInsertEmployee();
+        }
+        insertQuery().then(output => {
+          console.clear();
+          console.log(message);
+          console.log("Record Inserted\n");
+          this.getInquirerOptions();
+        })
+            //console.log(answers);
+        //resultSet.getInsertEmployee();
+      })
 
+    })
+  }
 }
